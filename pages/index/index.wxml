@@ -1,0 +1,71 @@
+<view class='game-state'>
+  <view class='game-state-inner'>
+    <view class='game-progress'>
+      <view class='game-progress-inner'></view>
+    </view>
+    <view class='game-level'>LEVEL {{currentLevel}}</view>
+  </view>
+</view>
+<view class='container'>
+  <!--游戏信息栏  -->
+  <view class='game-info'>
+
+    <!--当前分数栏  -->
+    <view class='game-score' >
+      <view class='current-score'>
+        <view class='label-title'>SCORE</view>
+        <view class='score-value' >{{score}}</view>
+      </view>
+      
+      <!--combo和最佳成绩栏  -->
+      <view class='combo-best'>
+        <view class='label-title'>COMBO</view>
+        <view class='combo-value'>{{combo}}x</view>
+        <view class='best-score'><view class='label-title' >BEST</view>  {{bestScore}}</view>
+      </view>
+
+      <!--restart重新开始栏  -->
+      <view class='restart-button btn' bindtap='newGame'>NEW GAME</view>
+      <view class='help-button btn' bindtap='help'>HELP</view>
+
+    </view>
+
+    <!--后续方块栏  -->
+    <view class='game-next'>
+      <view class='next-title' bindtap='gameOver'>NEXT TILES</view>
+      <view wx:for="{{nextColorsArray}}">
+        <view class='next-cell {{item}}'></view>
+      </view>
+    </view>
+  </view>
+
+  <!--游戏棋盘栏  -->
+  <view class='game-container'>
+     <view class='grid-container' >
+      <view class='grid-row' wx:for="{{rowArray}}" >
+        <view class='grid-cell' wx:for="{{rowArray}}"  bindtap='move'></view>
+      </view>
+    </view> 
+
+    <view class='touchped-container' >
+      <view wx:for="{{totalColorTiles}}" wx:for-index="tilesIndex" wx:for-item="tilesItem">
+        <view class='touchped-row' wx:for="{{rowArray}}" wx:for-index="rowIndex" wx:for-item="rowItem">
+          <view class='touchped-cell {{tilesItem.color}} {{tilesItem.className}}' wx:for="{{rowArray}}" wx:for-index="cellIndex" wx:for-item="cellItem" bindtap='greet' wx:if="{{cellItem==tilesItem.index_y&&rowItem==tilesItem.index_x}}"  style="position:absolute;left:{{tilesItem.position_x}}rpx;top:{{tilesItem.position_y}}rpx;">
+          </view>
+        </view>
+      </view>
+    </view> 　　　　<!-- touchped container view 结尾 -->
+
+    <view class='{{gameOver}}' bindtap='gameOver'>
+      <view class='game-message-title'>GAME OVER</view>
+      <view class='game-message-text'>{{gameMessageText}}</view>
+      <view class='game-message-btn'>点击右上角分享</view>
+    </view>      
+  
+    
+    <view class='game-tip'></view>
+    <view class='game-help {{show}}'>
+      <image src='images/help.jpg' bindtap='help' class='{{show}}'></image>
+    </view>
+  </view>                  <!--game container view结尾  -->
+</view>
